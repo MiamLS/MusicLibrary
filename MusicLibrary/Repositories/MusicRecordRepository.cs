@@ -1,6 +1,6 @@
 ﻿namespace MusicLibrary.Repositories
 {
-    public class MusicRepository
+    public class MusicRecordRepository
     {
     }
 }
