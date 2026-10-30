@@ -4,7 +4,7 @@ namespace MusicLibrary.Repositories
 {
     public class MusicRecordRepository
     {
-        private readonly List<MusicRecord> _musicRecords;
+        private readonly List<MusicRecord> _musicRecords = new();
 
         private int _nextId;
 
