@@ -48,9 +48,20 @@ namespace MusicLibrary.Controllers
         }
 
         // POST api/<MusicRecordController>
+        [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [HttpPost]
-        public void Post([FromBody] string value)
+        public ActionResult<MusicRecord> Post([FromBody] MusicRecord musicRecord)
         {
+            try
+            {
+                _musicRecordRepository.Add(musicRecord);
+                return Created($"api/MusicRecord/{musicRecord.Id}", musicRecord);
+            }
+            catch (ArgumentException ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
         // PUT api/<MusicRecordController>/5
