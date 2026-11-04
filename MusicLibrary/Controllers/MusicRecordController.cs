@@ -22,23 +22,21 @@ namespace MusicLibrary.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
+
+
         [HttpGet]
-        public ActionResult Get()
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public ActionResult<IEnumerable<MusicRecord>> Get(
+    [FromQuery] string? title = null,
+    [FromQuery] string? artist = null)
         {
-            try
-            {
-                IEnumerable<MusicRecord> musicRecords = _musicRecordRepository.GetAll();
-                if (musicRecords == null || musicRecords.Count() == 0)
-                {
-                    return NoContent();
-                }
-                return Ok(musicRecords);
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
+            IEnumerable<MusicRecord> musicRecords =
+                _musicRecordRepository.GetAll(title, artist);
+
+            return Ok(musicRecords);
         }
+
+
 
         // GET api/<MusicRecordController>/5
         [HttpGet("{id}")]

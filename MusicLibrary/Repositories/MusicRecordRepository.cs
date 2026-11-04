@@ -6,7 +6,7 @@ namespace MusicLibrary.Repositories
     {
         private readonly List<MusicRecord> _musicRecords = new(); 
 
-        private int _nextId;
+        private int _nextId = 1;
 
         public MusicRecordRepository()
         {
@@ -15,11 +15,27 @@ namespace MusicLibrary.Repositories
             Add(new MusicRecord { Title = "Song 3", Artist = "Artist 3", Duration = 240, PublicationYear = 2022 });
             Add(new MusicRecord { Title = "Song 4", Artist = "Artist 4", Duration = 150, PublicationYear = 2023 });
         }
-        
-        public List<MusicRecord> GetAll()
+
+        // GET: api/<MusicRecordController>
+        public IEnumerable<MusicRecord> GetAll(string? title = null, string? artist = null)
         {
-            return _musicRecords;
+            IEnumerable<MusicRecord> result = _musicRecords;
+
+            if (!string.IsNullOrWhiteSpace(title))
+            {
+                result = result.Where(m =>
+                    m.Title.Contains(title, StringComparison.OrdinalIgnoreCase));
+            }
+
+            if (!string.IsNullOrWhiteSpace(artist))
+            {
+                result = result.Where(m =>
+                    m.Artist.Contains(artist, StringComparison.OrdinalIgnoreCase));
+            }
+
+            return result;
         }
+
 
         public MusicRecord? Add(MusicRecord musicRec)
         {
