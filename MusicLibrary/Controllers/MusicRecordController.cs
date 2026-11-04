@@ -51,7 +51,7 @@ namespace MusicLibrary.Controllers
         // POST api/<MusicRecordController>
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [Authorize(Roles = "User")]
+        //[Authorize(Roles = "User")]
         [HttpPost]
         public ActionResult<MusicRecord> Post([FromBody] MusicRecord musicRecord)
         {
