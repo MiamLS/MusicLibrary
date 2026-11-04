@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Cors;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using MusicLibrary.Models;
 using MusicLibrary.Repositories;
@@ -50,6 +51,7 @@ namespace MusicLibrary.Controllers
         // POST api/<MusicRecordController>
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [Authorize(Roles = "User")]
         [HttpPost]
         public ActionResult<MusicRecord> Post([FromBody] MusicRecord musicRecord)
         {

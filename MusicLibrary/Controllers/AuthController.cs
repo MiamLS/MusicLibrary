@@ -22,7 +22,7 @@ namespace MusicLibrary.Controllers
     {
         // 1. Validate the user (In a real scenario, check your database here)
         // Here we use a simple hardcoded check:
-        if (login.Username == "admin" && login.Password == "1234")
+        if (login.Username == "user" && login.Password == "1234")
         {
             var token = GenerateJwtToken(login.Username);
             return Ok(new { token });
@@ -43,7 +43,7 @@ namespace MusicLibrary.Controllers
                 new Claim(JwtRegisteredClaimNames.Sub, username),
                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
                 new Claim(ClaimTypes.Name, username),
-                new Claim(ClaimTypes.Role, "Admin") // You can add roles here
+                new Claim(ClaimTypes.Role, "User") // You can add roles here
             };
 
         var token = new JwtSecurityToken(
