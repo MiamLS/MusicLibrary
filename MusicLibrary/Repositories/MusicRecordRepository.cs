@@ -37,6 +37,7 @@ namespace MusicLibrary.Repositories
         }
 
 
+        //Add method to add a new music record to the repository
         public MusicRecord? Add(MusicRecord musicRec)
         {
             if (musicRec == null)

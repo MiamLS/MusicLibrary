@@ -87,5 +87,36 @@ namespace xUnitMusicRecordsTest
             Assert.Equal("Artist 3", record.Artist);
         }
 
+        [Fact]
+        public void TestAdd_AddsNewRecordSuccessfullyToList()
+        {
+            // Arrange
+            var newRecord1 = new MusicRecord { Title = "Test Song", Artist = "Test Artist", Duration = 300, PublicationYear = 2024 };
+
+            // Act
+            MusicRecord added = _musicRecordRepository.Add(newRecord1);
+
+            // Assert
+            Assert.NotNull(added);
+            Assert.Equal("Test Song", added.Title);
+            Assert.Equal("Test Artist", added.Artist);
+            Assert.Equal(300, added.Duration);
+            Assert.Equal(2024, added.PublicationYear);
+            IEnumerable<MusicRecord> all = _musicRecordRepository.GetAll();
+            int countAfterAdd = all.Count();
+            Assert.Equal(5, countAfterAdd);
+        }
+
+        [Fact]
+        public void TestAdd_AddsNullRecord_ReturnsNull()
+        {
+            // Act - Try to add a null record
+            MusicRecord? added = _musicRecordRepository.Add(null);
+            // Assert - Check that the returned value is null and the count of records remains unchanged
+            Assert.Null(added);
+            IEnumerable<MusicRecord> all = _musicRecordRepository.GetAll();
+            int countAfterAdd = all.Count();
+            Assert.Equal(4, countAfterAdd); // Assuming there were 4 records initially in the repository
+        }
     }
 }
