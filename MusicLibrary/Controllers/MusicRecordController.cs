@@ -70,10 +70,23 @@ namespace MusicLibrary.Controllers
         {
         }
 
+
+
         // DELETE api/<MusicRecordController>/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public IActionResult Delete(int id)
         {
+            MusicRecord? deletedRecord = _musicRecordRepository.Delete(id);
+
+            if (deletedRecord == null)
+            {
+                return NotFound(); // Return 404 Not Found 
+            }
+
+            return NoContent(); // Return 204 No Content to indicate successful deletion
         }
+
     }
 }

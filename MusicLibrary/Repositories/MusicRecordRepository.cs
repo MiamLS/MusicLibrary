@@ -48,5 +48,21 @@ namespace MusicLibrary.Repositories
             _musicRecords.Add(musicRec);
             return musicRec;
         }
+
+        // Delete method to remove a music record from the repository by its ID
+        public MusicRecord? Delete(int id)
+        {
+            MusicRecord? record = _musicRecords.FirstOrDefault(m => m.Id == id);
+
+            if (record == null)
+            {
+                return null;
+            }
+
+            _musicRecords.Remove(record);
+
+            return record;
+        }
+
     }
 }

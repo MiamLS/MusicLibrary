@@ -118,5 +118,39 @@ namespace xUnitMusicRecordsTest
             int countAfterAdd = all.Count();
             Assert.Equal(4, countAfterAdd); // Assuming there were 4 records initially in the repository
         }
+
+        // Tester for deleting an existing record
+        [Fact]
+        public void TestDelete_ExistingRecord()
+        {
+            // Arrange
+            int id = 2;
+
+            // Act
+            MusicRecord? deletedRecord = _musicRecordRepository.Delete(id);
+
+            // Assert
+            Assert.NotNull(deletedRecord);
+            Assert.Equal(id, deletedRecord.Id);
+            Assert.Equal(3, _musicRecordRepository.GetAll().Count());
+        }
+
+        // Tester for deleting a non-existing record
+
+        [Fact]
+        public void TestDelete_NonExistingRecord()
+        {
+            // Arrange
+            int id = 999;
+
+            // Act
+            MusicRecord? deletedRecord = _musicRecordRepository.Delete(id);
+
+            // Assert
+            Assert.Null(deletedRecord);
+            Assert.Equal(4, _musicRecordRepository.GetAll().Count());
+        }
+
+
     }
 }
