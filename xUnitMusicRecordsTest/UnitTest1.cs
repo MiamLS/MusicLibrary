@@ -151,6 +151,33 @@ namespace xUnitMusicRecordsTest
             Assert.Equal(4, _musicRecordRepository.GetAll().Count());
         }
 
+        [Fact]
+        public void TestUpdate_ExistingRecord()
+        {
+            // Arrange
+            int id = 1;
+            var updates = new MusicRecord { Title = "Updated Song", Artist = "Updated Artist", Duration = 180, PublicationYear = 2025 };
+            // Act
+            MusicRecord? updatedRecord = _musicRecordRepository.Update(id, updates);
+            // Assert
+            Assert.NotNull(updatedRecord);
+            Assert.Equal(id, updatedRecord.Id);
+            Assert.Equal("Updated Song", updatedRecord.Title);
+            Assert.Equal("Updated Artist", updatedRecord.Artist);
+            Assert.Equal(180, updatedRecord.Duration);
+            Assert.Equal(2025, updatedRecord.PublicationYear);
+        }
 
+        [Fact]
+        public void TestUpdate_NonExistingRecord()
+        {
+            // Arrange
+            int id = 999;
+            var updates = new MusicRecord { Title = "Updated Song", Artist = "Updated Artist", Duration = 180, PublicationYear = 2025 };
+            // Act
+            MusicRecord? updatedRecord = _musicRecordRepository.Update(id, updates);
+            // Assert
+            Assert.Null(updatedRecord);
+        }
     }
 }
