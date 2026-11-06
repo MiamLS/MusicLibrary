@@ -65,12 +65,18 @@ namespace MusicLibrary.Controllers
         }
 
         // PUT api/<MusicRecordController>/5
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        public ActionResult<MusicRecord> Put(int id, [FromBody] MusicRecord value)
         {
+            var updatedRecord = _musicRecordRepository.Update(id, value);
+            if (updatedRecord == null)
+            {
+                return NotFound();
+            }
+            return Ok(updatedRecord);
         }
-
-
 
         // DELETE api/<MusicRecordController>/5
         [HttpDelete("{id}")]
