@@ -1,4 +1,5 @@
 ﻿using MusicLibrary.Models;
+using System.Numerics;
 
 namespace MusicLibrary.Repositories
 {
@@ -62,6 +63,19 @@ namespace MusicLibrary.Repositories
             _musicRecords.Remove(record);
 
             return record;
+        }
+
+        public MusicRecord? Update(int id, MusicRecord updates)
+        {
+            MusicRecord? existingRecord = _musicRecords.FirstOrDefault(m => m.Id == id);
+            if (existingRecord == null) return null;
+
+            existingRecord.Title = updates.Title;
+            existingRecord.Artist = updates.Artist;
+            existingRecord.Duration = updates.Duration;
+            existingRecord.PublicationYear = updates.PublicationYear;
+
+            return existingRecord;
         }
 
     }
