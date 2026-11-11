@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System.Text;
@@ -31,6 +32,10 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 
 builder.Services.AddSwaggerGen();
+builder.Services.AddDbContext<MusicLibrary.Data.MusicDBContext>(options =>
+{
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
+});
 //builder.Services.AddSwaggerGen(opt =>
 //{
 //    opt.SwaggerDoc("v1", new OpenApiInfo { Title = "My API", Version = "v1" });
