@@ -10,7 +10,7 @@ namespace MusicLibrary.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [EnableCors("FrontendPolicy")]
+    [EnableCors("AllowAll")]
     public class MusicRecordController : ControllerBase
     {
         private readonly MusicRecordRepository _musicRecordRepository;
@@ -41,9 +41,17 @@ namespace MusicLibrary.Controllers
 
         // GET api/<MusicRecordController>/5
         [HttpGet("{id}")]
-        public string Get(int id)
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public ActionResult<MusicRecord> GetById(int id)
         {
-            return "value";
+            var record = _musicRecordRepository.GetById(id);
+            if (record == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(record);
         }
 
         // POST api/<MusicRecordController>

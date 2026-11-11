@@ -61,7 +61,7 @@ builder.Services.AddDbContext<MusicDBContext>(options =>
 
 // Register Services & Repositories
 builder.Services.AddScoped<IAuthService, AuthService>();
-builder.Services.AddSingleton<MusicRecordRepository>();
+builder.Services.AddScoped<MusicRecordRepository>();
 
 // JWT Authentication setup
 var jwtSettings = builder.Configuration.GetSection("Jwt");

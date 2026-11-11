@@ -1,73 +1,63 @@
-﻿using MusicLibrary.Models;
-using System.Numerics;
+﻿using Microsoft.EntityFrameworkCore;
+using MusicLibrary.Data;
+using MusicLibrary.Models;
 
 namespace MusicLibrary.Repositories
 {
     public class MusicRecordRepository
     {
-        private readonly List<MusicRecord> _musicRecords = new(); 
+        private readonly MusicDBContext _context;
 
-        private int _nextId = 1;
-
-        public MusicRecordRepository()
+        public MusicRecordRepository(MusicDBContext context)
         {
-            Add(new MusicRecord { Title = "Song 1", Artist = "Artist 1", Duration = 180, PublicationYear = 2020 });
-            Add(new MusicRecord { Title = "Song 2", Artist = "Artist 2", Duration = 200, PublicationYear = 2021 });
-            Add(new MusicRecord { Title = "Song 3", Artist = "Artist 3", Duration = 240, PublicationYear = 2022 });
-            Add(new MusicRecord { Title = "Song 4", Artist = "Artist 4", Duration = 150, PublicationYear = 2023 });
+            _context = context;
         }
 
-        // GET: api/<MusicRecordController>
+        // Hent alle (med understøttelse af filtrering direkte i databasen)
         public IEnumerable<MusicRecord> GetAll(string? title = null, string? artist = null)
         {
-            IEnumerable<MusicRecord> result = _musicRecords;
-
-            if (!string.IsNullOrWhiteSpace(title))
-            {
-                result = result.Where(m =>
-                    m.Title.Contains(title, StringComparison.OrdinalIgnoreCase));
-            }
-
-            if (!string.IsNullOrWhiteSpace(artist))
-            {
-                result = result.Where(m =>
-                    m.Artist.Contains(artist, StringComparison.OrdinalIgnoreCase));
-            }
-
-            return result;
+            return _context.MusicRecords
+        .Where(m => (string.IsNullOrWhiteSpace(title) || m.Title.Contains(title)) &&
+                    (string.IsNullOrWhiteSpace(artist) || m.Artist.Contains(artist)))
+        .ToList();
         }
 
+        // Hent efter ID (bruger .Find() ligesom i kattedatabasen)
+        public MusicRecord? GetById(int id)
+        {
+            return _context.MusicRecords.Find(id);
+        }
 
-        //Add method to add a new music record to the repository
+        // Tilføj en ny musikalsk optagelse
         public MusicRecord? Add(MusicRecord musicRec)
         {
             if (musicRec == null)
             {
-                return null;
+                throw new ArgumentNullException(nameof(musicRec));
             }
-            musicRec.Id = _nextId++;
-            _musicRecords.Add(musicRec);
+
+            _context.MusicRecords.Add(musicRec);
+            _context.SaveChanges();
             return musicRec;
         }
 
-        // Delete method to remove a music record from the repository by its ID
+        // Slet en optagelse baseret på ID
         public MusicRecord? Delete(int id)
         {
-            MusicRecord? record = _musicRecords.FirstOrDefault(m => m.Id == id);
-
-            if (record == null)
+            var record = GetById(id);
+            if (record != null)
             {
-                return null;
+                _context.MusicRecords.Remove(record);
+                _context.SaveChanges();
+                return record;
             }
-
-            _musicRecords.Remove(record);
-
-            return record;
+            return null;
         }
 
+        // Opdater en eksisterende optagelse
         public MusicRecord? Update(int id, MusicRecord updates)
         {
-            MusicRecord? existingRecord = _musicRecords.FirstOrDefault(m => m.Id == id);
+            var existingRecord = GetById(id);
             if (existingRecord == null) return null;
 
             existingRecord.Title = updates.Title;
@@ -75,8 +65,8 @@ namespace MusicLibrary.Repositories
             existingRecord.Duration = updates.Duration;
             existingRecord.PublicationYear = updates.PublicationYear;
 
+            _context.SaveChanges();
             return existingRecord;
         }
-
     }
 }
