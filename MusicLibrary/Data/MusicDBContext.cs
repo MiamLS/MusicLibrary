@@ -9,6 +9,7 @@ namespace MusicLibrary.Data
         {
         } 
         public DbSet<MusicRecord> MusicRecords { get; set; } = null!;
+        public DbSet<User> Users { get; set; } = null!;
     }
     
 }
