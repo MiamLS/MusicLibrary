@@ -6,10 +6,10 @@ namespace xUnitMusicRecordsTest
     public class UnitTest1
     {
 
-        private MusicRecordRepository _musicRecordRepository;
+        private MusicRecordRepositoryList _musicRecordRepository;
         public UnitTest1()
         {
-            _musicRecordRepository = new MusicRecordRepository();
+            _musicRecordRepository = new MusicRecordRepositoryList();
         }
 
         [Fact]
