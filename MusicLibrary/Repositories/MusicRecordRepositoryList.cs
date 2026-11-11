@@ -4,13 +4,12 @@ namespace MusicLibrary.Repositories
 {
     public class MusicRecordRepositoryList
     {
-        public class MusicRecordRepository
-        {
+        
             private readonly List<MusicRecord> _musicRecords = new();
 
             private int _nextId = 1;
 
-            public MusicRecordRepository()
+            public MusicRecordRepositoryList()
             {
                 Add(new MusicRecord { Title = "Song 1", Artist = "Artist 1", Duration = 180, PublicationYear = 2020 });
                 Add(new MusicRecord { Title = "Song 2", Artist = "Artist 2", Duration = 200, PublicationYear = 2021 });
@@ -80,5 +79,5 @@ namespace MusicLibrary.Repositories
             }
 
         }
-    }
+    
 }
