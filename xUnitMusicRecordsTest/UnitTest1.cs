@@ -16,8 +16,8 @@ namespace xUnitMusicRecordsTest
         public void TestGetAll_ReturnsAllRecords()
         {
             // Arrange
-            var newRecord1 = new MusicRecord { Title = "Test Song", Artist = "Test Artist", Duration = 300, PublicationYear = 2024 };
-            var newRecord2 = new MusicRecord { Title = "Another Test Song", Artist = "Another Test Artist", Duration = 250, PublicationYear = 2023 };
+            var newRecord1 = new MusicRecord { Title = "As it Was", Artist = "Harry Styles", Duration = 167, PublicationYear = 2022 };
+            var newRecord2 = new MusicRecord { Title = "Dancing Queen", Artist = "ABBA", Duration = 232, PublicationYear = 1976 };
 
             // Act
             _musicRecordRepository.Add(newRecord1);
@@ -44,14 +44,14 @@ namespace xUnitMusicRecordsTest
         public void TestSearchByTitle()
         {
             // Arrange
-            string title = "song 1";
+            string title = "Hey Jude";
 
             // Act
             var result = _musicRecordRepository.GetAll(title: title);
 
             // Assert
             var record = Assert.Single(result);
-            Assert.Equal("Song 1", record.Title);
+            Assert.Equal("Hey Jude", record.Title);
         }
 
 
@@ -60,14 +60,14 @@ namespace xUnitMusicRecordsTest
         public void TestSearchByArtist()
         {
             // Arrange
-            string artist = "artist 2";
+            string artist = "Bee Gees";
 
             // Act
             var result = _musicRecordRepository.GetAll(artist: artist);
 
             // Assert
             var record = Assert.Single(result);
-            Assert.Equal("Artist 2", record.Artist);
+            Assert.Equal("Bee Gees", record.Artist);
         }
 
         // Tester for searching by title and artist
@@ -75,33 +75,33 @@ namespace xUnitMusicRecordsTest
         public void TestSearchByTitleAndArtist()
         {
             // Arrange
-            string title = "Song 3";
-            string artist = "Artist 3";
+            string title = "Blinding Lights";
+            string artist = "The Weeknd";
 
             // Act
             var result = _musicRecordRepository.GetAll(title, artist);
 
             // Assert
             var record = Assert.Single(result);
-            Assert.Equal("Song 3", record.Title);
-            Assert.Equal("Artist 3", record.Artist);
+            Assert.Equal("Blinding Lights", record.Title);
+            Assert.Equal("The Weeknd", record.Artist);
         }
 
         [Fact]
         public void TestAdd_AddsNewRecordSuccessfullyToList()
         {
             // Arrange
-            var newRecord1 = new MusicRecord { Title = "Test Song", Artist = "Test Artist", Duration = 300, PublicationYear = 2024 };
+            var newRecord1 = new MusicRecord { Title = "Flowers", Artist = "Miley Cyrus", Duration = 200, PublicationYear = 2023 };
 
             // Act
             MusicRecord added = _musicRecordRepository.Add(newRecord1);
 
             // Assert
             Assert.NotNull(added);
-            Assert.Equal("Test Song", added.Title);
-            Assert.Equal("Test Artist", added.Artist);
-            Assert.Equal(300, added.Duration);
-            Assert.Equal(2024, added.PublicationYear);
+            Assert.Equal("Flowers", added.Title);
+            Assert.Equal("Miley Cyrus", added.Artist);
+            Assert.Equal(200, added.Duration);
+            Assert.Equal(2023, added.PublicationYear);
             IEnumerable<MusicRecord> all = _musicRecordRepository.GetAll();
             int countAfterAdd = all.Count();
             Assert.Equal(5, countAfterAdd);
@@ -156,16 +156,16 @@ namespace xUnitMusicRecordsTest
         {
             // Arrange
             int id = 1;
-            var updates = new MusicRecord { Title = "Updated Song", Artist = "Updated Artist", Duration = 180, PublicationYear = 2025 };
+            var updates = new MusicRecord { Title = "Thriller", Artist = "Michael Jackson", Duration = 359, PublicationYear = 1982 };
             // Act
             MusicRecord? updatedRecord = _musicRecordRepository.Update(id, updates);
             // Assert
             Assert.NotNull(updatedRecord);
             Assert.Equal(id, updatedRecord.Id);
-            Assert.Equal("Updated Song", updatedRecord.Title);
-            Assert.Equal("Updated Artist", updatedRecord.Artist);
-            Assert.Equal(180, updatedRecord.Duration);
-            Assert.Equal(2025, updatedRecord.PublicationYear);
+            Assert.Equal("Thriller", updatedRecord.Title);
+            Assert.Equal("Michael Jackson", updatedRecord.Artist);
+            Assert.Equal(359, updatedRecord.Duration);
+            Assert.Equal(1982, updatedRecord.PublicationYear);
         }
 
         [Fact]
@@ -173,7 +173,7 @@ namespace xUnitMusicRecordsTest
         {
             // Arrange
             int id = 999;
-            var updates = new MusicRecord { Title = "Updated Song", Artist = "Updated Artist", Duration = 180, PublicationYear = 2025 };
+            var updates = new MusicRecord { Title = "Thriller", Artist = "Michael Jackson", Duration = 359, PublicationYear = 1982 };
             // Act
             MusicRecord? updatedRecord = _musicRecordRepository.Update(id, updates);
             // Assert

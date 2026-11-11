@@ -11,10 +11,10 @@ namespace MusicLibrary.Repositories
 
             public MusicRecordRepositoryList()
             {
-                Add(new MusicRecord { Title = "Song 1", Artist = "Artist 1", Duration = 180, PublicationYear = 2020 });
-                Add(new MusicRecord { Title = "Song 2", Artist = "Artist 2", Duration = 200, PublicationYear = 2021 });
-                Add(new MusicRecord { Title = "Song 3", Artist = "Artist 3", Duration = 240, PublicationYear = 2022 });
-                Add(new MusicRecord { Title = "Song 4", Artist = "Artist 4", Duration = 150, PublicationYear = 2023 });
+                Add(new MusicRecord { Title = "Hey Jude", Artist = "The Beatles", Duration = 432, PublicationYear = 1968 });
+                Add(new MusicRecord { Title = "Hotel California", Artist = "Eagles", Duration = 390, PublicationYear = 1977 });
+                Add(new MusicRecord { Title = "Staying Alive", Artist = "Bee Gees", Duration = 285, PublicationYear = 1977 });
+                Add(new MusicRecord { Title = "Blinding Lights", Artist = "The Weeknd", Duration = 202, PublicationYear = 2019 });
             }
 
             // GET: api/<MusicRecordController>
